@@ -7,7 +7,8 @@ function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
+  console.log(error);
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -106,7 +107,6 @@ function SignUp() {
         </p>
       </div>
       <ToastContainer />
-      {error && <p className="text-red-500 text-center">{error}</p>}
     </div>
   );
 }

@@ -7,7 +7,7 @@ function Navbar() {
       <div className="flex justify-between items-center max-w-6xl mx-auto py-4 px-6">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold tracking-wide">
-          Redex<span className="text-red-500">Crud</span>
+          Redux<span className="text-red-500">Crud</span>
         </Link>
 
         {/* Navigation Links */}
