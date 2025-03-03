@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import OAuth from '../components/OAuth';
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -42,11 +43,6 @@ function SignUp() {
       toast.error(error.message || 'Signup failed! ❌', { autoClose: 3000 });
       setLoading(false);
     }
-  };
-
-  const handleGoogleSignIn = () => {
-    console.log('Google Sign-In clicked');
-    toast.info('Google Sign-In is under development!', { autoClose: 3000 });
   };
 
   return (
@@ -95,13 +91,7 @@ function SignUp() {
 
         <div className="my-3 text-center text-gray-500">or</div>
 
-        <button
-          onClick={handleGoogleSignIn}
-          className="w-full flex items-center justify-center gap-2 border p-2 rounded-md hover:bg-gray-100 transition"
-        >
-          <FcGoogle className="text-xl" />
-          Sign up with Google
-        </button>
+        <OAuth />
 
         <p className="text-center text-sm mt-3">
           Already have an account?

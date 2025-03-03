@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInFailure, signInStart, signInSuccess } from '../redux/user/userSlice';
+import OAuth from '../components/OAuth';
 
 function SignIn() {
   const [formData, setFormData] = useState({});
@@ -46,10 +47,6 @@ function SignIn() {
     }
   };
 
-  const handleGoogleSignIn = () => {
-    console.log('Google Sign-In clicked');
-    toast.info('Google Sign-In is under development!', { autoClose: 3000 });
-  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -84,17 +81,10 @@ function SignIn() {
           >
             {loading ? 'Loading...' : 'Sign In'}
           </button>
+          <OAuth />
         </form>
 
         <div className="my-3 text-center text-gray-500">or</div>
-
-        <button
-          onClick={handleGoogleSignIn}
-          className="w-full flex items-center justify-center gap-2 border p-2 rounded-md hover:bg-gray-100 transition"
-        >
-          <FcGoogle className="text-xl" />
-          Sign up with Google
-        </button>
 
         <p className="text-center text-sm mt-3">
           Don't have an account?
