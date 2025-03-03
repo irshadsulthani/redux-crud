@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -7,6 +8,7 @@ function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
   console.log(error);
   
   const handleChange = (e) => {
@@ -33,8 +35,8 @@ function SignUp() {
       if (!res.ok) {
         throw new Error(data.message || 'Signup failed! ❌');
       }
-
       toast.success('Account created successfully! 🎉', { autoClose: 3000 });
+      navigate('/sign-in')
     } catch (error) {
       setError(error.message);
       toast.error(error.message || 'Signup failed! ❌', { autoClose: 3000 });

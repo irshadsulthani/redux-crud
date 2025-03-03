@@ -55,7 +55,10 @@ export const signIn = async (req, res, next) => {
     const { password: _, ...userData } = user._doc;
 
     // set token in cookie (no spaces in cookie name)
-    res.cookie("accessToken", token, { httpOnly: true });
+    res.cookie("accessToken", token, { 
+      httpOnly: true,
+      maxAge: 3600000 // 1 hour in milliseconds
+    });
 
     res.status(200).json({ message: "User signed in successfully", user: userData });
   } catch (error) {
