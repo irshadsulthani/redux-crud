@@ -66,8 +66,9 @@ export const signIn = async (req, res, next) => {
 
 export const google = async (req, res, next) => {
   try {
-    const { name, email, imageUrl } = req.body;
-
+    const { name, email, image } = req.body;
+    console.log(req.body);
+    
     // Corrected: remove "new" and await the query
     const user = await User.findOne({ email });
 
@@ -90,7 +91,7 @@ export const google = async (req, res, next) => {
         userName: name.split(" ").join("").toLowerCase() + Math.floor(Math.random() * 10000),
         email: email,
         password: hashedPassword,
-        profilePicture: imageUrl
+        profilePicture: image
       });
       await newUser.save();
 

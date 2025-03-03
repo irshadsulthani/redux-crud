@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Navbar() {
+  const { currentUser } = useSelector((state) => state.user);
+
   return (
-    <nav className="bg-slate-800 text-white shadow-md">
+    <nav className="bg-slate-900 text-white shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto py-4 px-6">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold tracking-wide">
@@ -11,7 +14,7 @@ function Navbar() {
         </Link>
 
         {/* Navigation Links */}
-        <ul className="flex gap-6 text-lg">
+        <ul className="flex items-center gap-6 text-lg">
           <li>
             <Link to="/" className="hover:text-red-400 transition duration-300">
               Home
@@ -22,13 +25,26 @@ function Navbar() {
               About
             </Link>
           </li>
+
+          {/* Profile Section */}
           <li>
-            <Link 
-              to="/sign-in" 
-              className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white transition duration-300"
-            >
-              Sign In
-            </Link>
+            {currentUser ? (
+              <Link to="/profile" className="flex items-center gap-3">
+                <img
+                  src={currentUser.user.profilePicture}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full border-2 border-red-500"
+                />
+                <span className="hidden sm:inline-block font-medium">{currentUser.user.username}</span>
+              </Link>
+            ) : (
+              <Link
+                to="/sign-in"
+                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white transition duration-300"
+              >
+                Sign In
+              </Link>
+            )}
           </li>
         </ul>
       </div>
