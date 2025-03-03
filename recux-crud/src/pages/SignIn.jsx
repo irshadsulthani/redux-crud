@@ -3,13 +3,15 @@ import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInFailure, signInStart, signInSuccess } from '../redux/user/userSlice';
 
 function SignIn() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);  
-  const navigate = useNavigate()
-  
+  const { loading, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   console.log(error);
   
   const handleChange = (e) => {
@@ -18,10 +20,9 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
 
     try {
+      dispatch(signInStart());
       const res = await fetch('/backend/admin/signIn', {
         method: 'POST',
         headers: {
@@ -31,17 +32,17 @@ function SignIn() {
       });
 
       const data = await res.json();
-      setLoading(false);
 
       if (!res.ok) {
         throw new Error(data.message || 'Sign in failed! ❌');
       }
+
+      dispatch(signInSuccess(data));
       toast.success('User signed in successfully! 🎉', { autoClose: 3000 });
-      navigate('/')
+      navigate('/');
     } catch (error) {
-      setError(error.message);
       toast.error(error.message || 'Sign in failed! ❌', { autoClose: 3000 });
-      setLoading(false);
+      dispatch(signInFailure(error));
     }
   };
 
