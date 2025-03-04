@@ -16,6 +16,8 @@ import AdminHome from "./pages/admin-pages/AdminHome";
 import AdminDashboard from "./pages/admin-pages/AdminDashboard";
 import UserAdd from "./pages/admin-pages/UserAdd";
 import AdminLogin from "./pages/admin-pages/AdminLogin";
+import AdminPrivateRoute from "./components/AdminPrivateRoute";
+import AdminWithoutPrivate from "./components/AdminWithoutPrivate";
 
 function App() {
   return (
@@ -47,11 +49,14 @@ function AppRoutes() {
           <Route path="/profile" element={<Profile />} />
         </Route>
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/adminLogin" element={<AdminLogin />} />
-        <Route path="/admin/user-add" element={<UserAdd />} />
+        <Route element={<AdminWithoutPrivate />}>
+           <Route path="/adminLogin" element={<AdminLogin />} />
+        </Route>
+        <Route element={<AdminPrivateRoute /> }>
+          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/user-add" element={<UserAdd />} />  
+        </Route>
       </Routes>
     </>
   );

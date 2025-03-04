@@ -5,15 +5,17 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
 const persistConfig = {
-  key: 'user', // Change 'root' to match your reducer name
+  key: 'root', 
   version: 1,
   storage,
 };
 
-const persistedUserReducer = persistReducer(persistConfig, userReducer, adminReducer);
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
+const persistedAdminReduer = persistReducer(persistConfig, adminReducer)
 
 const rootReducer = combineReducers({ 
   user: persistedUserReducer, 
+  admin:persistedAdminReduer
 });
 
 

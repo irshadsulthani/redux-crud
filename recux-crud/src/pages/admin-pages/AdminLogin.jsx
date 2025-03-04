@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { adminLoginStart } from "../../redux/user/adminSlice";
+import { adminLoginFailure, adminLoginStart, adminLoginSuccess } from "../../redux/user/adminSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -31,10 +31,12 @@ function AdminLogin() {
       if (!res.ok) {
         throw new Error(data.message || "Login failed! ❌");
       }
+      dispatch(adminLoginSuccess(data.admin))
       navigate('/admin')
       toast.success("Admin logged in successfully! ✅", { autoClose: 3000 });
     } catch (error) {
-      console.error("Error:", error); // Log the actual error
+      console.error("Error:", error); 
+      dispatch(adminLoginFailure())
       toast.error(error.message || "Sign in failed! ❌", { autoClose: 3000 });
     }
   };
