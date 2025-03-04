@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { deleteUserFailure, deleteUserStart, deleteUserSuccess, logOut, updatingUser } from "../redux/user/userSlice";
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, logOut, updatingUser } from "../../redux/user/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";

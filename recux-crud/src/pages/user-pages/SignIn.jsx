@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import OAuth from '../components/OAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInFailure, signInStart, signInSuccess } from '../../redux/user/userSlice';
+import OAuth from '../../components/OAuth';
 
-function SignUp() {
+function SignIn() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const { loading, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   console.log(error);
   
   const handleChange = (e) => {
@@ -18,11 +20,10 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
 
     try {
-      const res = await fetch('/backend/auth/signUp', {
+      dispatch(signInStart());
+      const res = await fetch('/backend/auth/signIn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,35 +32,27 @@ function SignUp() {
       });
 
       const data = await res.json();
-      setLoading(false);
 
       if (!res.ok) {
-        throw new Error(data.message || 'Signup failed! ❌');
+        throw new Error(data.message || 'Sign in failed! ❌');
       }
-      toast.success('Account created successfully! 🎉', { autoClose: 3000 });
-      navigate('/sign-in')
+
+      dispatch(signInSuccess(data));
+      toast.success('User signed in successfully! 🎉', { autoClose: 3000 });
+      navigate('/');
     } catch (error) {
-      setError(error.message);
-      toast.error(error.message || 'Signup failed! ❌', { autoClose: 3000 });
-      setLoading(false);
+      toast.error(error.message || 'Sign in failed! ❌', { autoClose: 3000 });
+      dispatch(signInFailure(error));
     }
   };
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="p-6 w-full max-w-sm bg-white border border-gray-300 rounded-lg shadow-md">
-        <h1 className="text-2xl font-semibold text-center mb-4">Sign Up</h1>
+        <h1 className="text-2xl font-semibold text-center mb-4">Sign In</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder="Username"
-            id="username"
-            className="border p-2 rounded-md focus:outline-blue-500"
-            required
-            onChange={handleChange}
-          />
-
           <input
             type="email"
             placeholder="Email"
@@ -85,17 +78,16 @@ function SignUp() {
               loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
             }`}
           >
-            {loading ? 'Loading...' : 'Sign Up'}
+            {loading ? 'Loading...' : 'Sign In'}
           </button>
+          <OAuth />
         </form>
 
         <div className="my-3 text-center text-gray-500">or</div>
 
-        <OAuth />
-
         <p className="text-center text-sm mt-3">
-          Already have an account?
-          <a href="/sign-in" className="text-blue-500 hover:underline ml-1">Sign In</a>
+          Don't have an account?
+          <a href="/sign-up" className="text-blue-500 hover:underline ml-1">Sign Up</a>
         </p>
       </div>
       <ToastContainer />
@@ -103,4 +95,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignIn;
