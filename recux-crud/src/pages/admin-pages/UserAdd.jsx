@@ -25,25 +25,33 @@ function UserAdd() {
     setLoading(true);
     setError(null); // Clear previous errors
 
+    // Basic email validation
+    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
+        toast.error("Please provide a valid email address.");
+        setLoading(false);
+        return;
+    }
+
     try {
-      const res = await axios.post("/backend/admin/user/add-user", formData, {
-        headers: { "Content-Type": "application/json" },
-      });
+        const res = await axios.post("/backend/admin/user/add-user", formData, {
+            headers: { "Content-Type": "application/json" },
+        });
 
-      console.log("User Added:", res.data);
-      toast.success("User added successfully!", { position: "top-right" });
+        console.log("User Added:", res.data);
+        toast.success("User added successfully!", { position: "top-right" });
 
-      // Clear form
-      setFormData({ name: "", email: "", password: "" });
+        // Clear form
+        setFormData({ name: "", email: "", password: "" });
     } catch (err) {
-      console.error("Error:", err.response?.data || err.message);
-      const errorMessage = err.response?.data?.message || "Something went wrong";
-      setError(errorMessage);
-      toast.error(errorMessage, { position: "top-right" });
+        console.error("Error:", err.response?.data || err.message);
+        const errorMessage = err.response?.data?.message || "Something went wrong";
+        setError(errorMessage);  // Set the error message from backend
+        toast.error(errorMessage, { position: "top-right" });
     }
 
     setLoading(false);
-  };
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -52,7 +60,12 @@ function UserAdd() {
           Add New User
         </h2>
 
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        {/* Error Message Display */}
+        {error && (
+          <div className="text-red-500 text-sm mb-4">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name Input */}

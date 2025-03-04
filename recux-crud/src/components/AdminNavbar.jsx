@@ -23,7 +23,7 @@ function AdminNavbar() {
   }
 
   return (
-    <nav className="bg-gray-900 text-white py-4 px-6 shadow-md flex items-center">
+    <nav className="bg-gray-900 sticky top-0 z-50 text-white py-4 px-6 shadow-md flex items-center">
       {/* Left - Logo */}
       <Link to="/admin" className="text-2xl font-bold tracking-wide">
         Admin Panel
@@ -43,7 +43,7 @@ function AdminNavbar() {
         <li>
           <Link to="/admin/user-add" className="flex items-center gap-2 hover:text-gray-400 transition">
             <FaUsers className="text-xl" />
-            Users
+               Add User
           </Link>
         </li>
       </ul>

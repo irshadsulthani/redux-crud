@@ -6,7 +6,7 @@ function Navbar() {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
-    <nav className="bg-slate-900 text-white shadow-md">
+    <nav className="bg-slate-900 sticky top-0 z-50 text-white shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto py-4 px-6">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold tracking-wide">
