@@ -19,7 +19,7 @@ function Profile() {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get('/backend/admin/logout');
+      const res = await axios.get('/backend/auth/logout');
       
       if (res.status === 200) {
         toast.success("User Logged Out Successfully");

@@ -1,5 +1,5 @@
 import express from 'express'
-import { google, logout, signIn, signUp } from '../controllers/admin.controller.js';
+import { google, logout, signIn, signUp } from '../controllers/auth.controller.js';
 
 
 

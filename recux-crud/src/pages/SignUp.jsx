@@ -22,7 +22,7 @@ function SignUp() {
     setLoading(true);
 
     try {
-      const res = await fetch('/backend/admin/signUp', {
+      const res = await fetch('/backend/auth/signUp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

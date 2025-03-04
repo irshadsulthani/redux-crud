@@ -23,7 +23,7 @@ function SignIn() {
 
     try {
       dispatch(signInStart());
-      const res = await fetch('/backend/admin/signIn', {
+      const res = await fetch('/backend/auth/signIn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
