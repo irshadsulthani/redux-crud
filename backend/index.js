@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoute from './routes/user.route.js'
 import adminRoute from './routes/admin.route.js'
+import cookieParser from "cookie-parser";
+import cors from 'cors'
 
 dotenv.config();
 
@@ -10,9 +12,18 @@ const app = express();
 const port = 3000;
 
 app.use(express.json())
+app.use(cookieParser())
 
 app.use('/backend/user',userRoute)
 app.use('/backend/admin', adminRoute)
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Replace with your frontend URL
+    credentials: true, // Allows cookies to be sent
+  })
+);
+
 
 mongoose
   .connect(process.env.MONGO)

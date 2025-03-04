@@ -49,6 +49,9 @@ export const signIn = async (req, res, next) => {
     // generating JWT token with an expiration time
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
+    console.log('token token', token);
+    
+
     // destructure the user object to remove the password field from the response
     const { password: _, ...userData } = user._doc;
 
@@ -97,6 +100,8 @@ export const google = async (req, res, next) => {
 
       // After creating a new user, generate a token and respond
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+      console.log('token in google',token);
+      
       const { password: pwd, ...userData } = newUser._doc;
 
       res.cookie("accessToken", token, { 

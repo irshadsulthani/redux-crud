@@ -3,24 +3,28 @@ import userReducer from './user/userSlice.js';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
-const rootReducer = combineReducers({ 
-  user: userReducer 
-});
-
 const persistConfig = {
-  key: 'root',
+  key: 'user', // Change 'root' to match your reducer name
   version: 1,
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
+
+const rootReducer = combineReducers({ 
+  user: persistedUserReducer, 
+});
+
+
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'], 
+      },
     }),
 });
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
