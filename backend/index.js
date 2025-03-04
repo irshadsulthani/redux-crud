@@ -5,6 +5,7 @@ import userRoute from './routes/user.route.js'
 import authRoute from './routes/auth.route.js'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
+import adminRoute from "./routes/admin.route.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const port = 3000;
 app.use(express.json())
 app.use(cookieParser())
 
+app.use('/backend/admin', adminRoute)
 app.use('/backend/user',userRoute)
 app.use('/backend/auth', authRoute)
 
