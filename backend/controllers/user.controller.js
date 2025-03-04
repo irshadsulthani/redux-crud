@@ -9,11 +9,6 @@ export const test = (req, res) => {
 };
 
 export const updateUser = async (req, res, next) => {
-    console.log("✅ Request received for user update");
-
-    console.log("Request body:", req.body);
-    console.log("Authenticated user ID:", req.user?.id);
-    console.log("Requested update user ID:", req.params.id); // Debug this
 
     if (!req.params.id) {
         return next(errorHandler(400, "User ID is missing in the request URL."));
@@ -25,7 +20,7 @@ export const updateUser = async (req, res, next) => {
 
     try {
         let updateData = {
-            userName: req.body.username,  // Fixed field name
+            userName: req.body.username,  
             email: req.body.email,
             profilePicture: req.body.profilePicture,
         };
@@ -59,5 +54,28 @@ export const updateUser = async (req, res, next) => {
     } catch (error) {
         console.error("❌ Update error:", error);
         next(error);
+    }
+};
+
+export const deleteUser = async (req, res) => {     
+    try {
+        const { id } = req.params;
+        console.log(id);
+
+        if (!id) {
+            return res.status(400).json({ message: "User ID is required" });
+        }
+
+        const deletedUser = await User.findByIdAndDelete(id);
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json({ message: "Account Deleted Successfully" });
+
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 };

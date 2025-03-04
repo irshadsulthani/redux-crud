@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { updatingUser } from "../redux/user/userSlice";
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, logOut, updatingUser } from "../redux/user/userSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
 
 function Profile() {
   const { currentUser } = useSelector((state) => state.user);
@@ -12,23 +14,48 @@ function Profile() {
   const [image, setImage] = useState(currentUser.user.profilePicture);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const navigate = useNavigate()
 
-  const handleDelete = async (e) => {
-    e.preventDefault()
+  const handleLogout = async (e) => {
+    e.preventDefault();
     try {
-      const res = await axios.delete(`/backend/user/delete/${currentUser.user._id}`,{
-        withCredentials: true,
-      })
-      if(res.status === 200){
-        toast.success('Account Deleted Success! ')
-      }
+      const res = await axios.get('/backend/admin/logout');
       
+      if (res.status === 200) {
+        toast.success("User Logged Out Successfully");
+        dispatch(logOut());
+      }
     } catch (error) {
       console.log(error);
-      
-      toast.error("failed to Delete the User")
+      toast.error("Failed to Logout");
     }
-  }
+  };
+  
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    dispatch(deleteUserStart()); // Start loading state
+  
+    try {
+      const res = await axios.delete(`/backend/user/delete/${currentUser.user._id}`, {
+        withCredentials: true,
+      });
+  
+      if (res.status === 200) {
+        toast.success("Account Deleted Successfully!");
+        dispatch(deleteUserSuccess()); // Dispatch success action
+  
+        setTimeout(() => {
+          navigate("/sign-up");
+        }, 2000);
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch(deleteUserFailure(error.response?.data?.message || "Failed to delete user")); // Dispatch failure action
+      toast.error("Failed to delete the user");
+    }
+  };
+  
 
   const handleClickUpdate = async (e) => {
     e.preventDefault();
@@ -161,7 +188,7 @@ function Profile() {
         <a onClick={handleDelete} href="#" className="hover:underline transition duration-200">
           Delete Account
         </a>
-        <a href="#" className="hover:underline transition duration-200">
+        <a href="#" onClick={handleLogout} className="hover:underline transition duration-200">
           Logout
         </a>
       </div>
