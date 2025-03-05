@@ -91,13 +91,13 @@ function AdminDashboard() {
       </div>
 
       {/* Search input */}
-      <div className="mb-6">
-        <div className="flex items-center border rounded-lg px-4 py-2">
+      <div className="mb-4 flex justify-center">
+        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-full px-2 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-400 w-64 h-10">
           <Search className="text-gray-500" />
           <input
             type="text"
-            className="ml-2 w-full text-gray-700 focus:outline-none"
-            placeholder="Search users by name..."
+            className="ml-2 w-full bg-transparent text-gray-700 text-sm focus:outline-none"
+            placeholder="Search users..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
