@@ -21,7 +21,7 @@ app.use('/backend/auth', authRoute)
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with your frontend URL
+    origin: "http://localhost:5173", 
     credentials: true, // Allows cookies to be sent
   })
 );

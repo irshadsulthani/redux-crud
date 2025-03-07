@@ -25,7 +25,6 @@ function UserAdd() {
     setLoading(true);
     setError(null); // Clear previous errors
 
-    // Basic email validation
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
         toast.error("Please provide a valid email address.");
         setLoading(false);
@@ -40,7 +39,6 @@ function UserAdd() {
         console.log("User Added:", res.data);
         toast.success("User added successfully!", { position: "top-right" });
 
-        // Clear form
         setFormData({ name: "", email: "", password: "" });
     } catch (err) {
         console.error("Error:", err.response?.data || err.message);

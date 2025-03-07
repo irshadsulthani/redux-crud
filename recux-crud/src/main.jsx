@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      <PersistGate persistor={persistor} loading={null} onBeforeLift={() => console.log("Rehydration complete")}>
+      <PersistGate persistor={persistor} loading={null}>
         <App />
       </PersistGate>
     </Provider>

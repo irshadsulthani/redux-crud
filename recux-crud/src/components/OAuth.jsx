@@ -30,7 +30,6 @@ function OAuth() {
       });
       
       const data = await res.json();
-      console.log('data data',data);
       
       dispatch(signInSuccess(data));
       toast.success("Login completed successfully!", { autoClose: 2000 });

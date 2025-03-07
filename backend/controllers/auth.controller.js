@@ -91,7 +91,7 @@ export const google = async (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
 
       const newUser = new User({
-        userName: name.split(" ").join("").toLowerCase() + Math.floor(Math.random() * 10000),
+        userName: name,
         email: email,
         password: hashedPassword,
         profilePicture: image
