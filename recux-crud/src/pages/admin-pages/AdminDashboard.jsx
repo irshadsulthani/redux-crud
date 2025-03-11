@@ -5,11 +5,6 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 
-
-
-
-
-
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
