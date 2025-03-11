@@ -1,11 +1,10 @@
-
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Outlet,Navigate } from 'react-router-dom'
+import React from "react";
+import { useSelector } from "react-redux";
+import { Outlet, Navigate } from "react-router-dom";
 
 function UserWithLogin() {
-  let currentUser = useSelector(state => state.user)
-  return  currentUser ? <Navigate to ='/' /> : <Outlet/> 
+  const { currentUser } = useSelector(state => state.user);
+  return currentUser ? <Navigate to="/" replace /> : <Outlet />;
 }
 
-export default UserWithLogin
+export default UserWithLogin;

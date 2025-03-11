@@ -18,7 +18,6 @@ import UserAdd from "./pages/admin-pages/UserAdd";
 import AdminLogin from "./pages/admin-pages/AdminLogin";
 import AdminPrivateRoute from "./components/AdminPrivateRoute";
 import AdminWithoutPrivate from "./components/AdminWithoutPrivate";
-import UserWithLogin from "./components/UserWithLogin";
 
 function App() {
   return (
@@ -44,21 +43,19 @@ function AppRoutes() {
         {/* User Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route element={<UserWithLogin />}>
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-        </Route>
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
         </Route>
 
         <Route element={<AdminWithoutPrivate />}>
-          <Route path="/adminLogin" element={<AdminLogin />} />
+           <Route path="/adminLogin" element={<AdminLogin />} />
         </Route>
-        <Route element={<AdminPrivateRoute />}>
+        <Route element={<AdminPrivateRoute /> }>
           <Route path="/admin" element={<AdminHome />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/user-add" element={<UserAdd />} />
+          <Route path="/admin/user-add" element={<UserAdd />} />  
         </Route>
       </Routes>
     </>
