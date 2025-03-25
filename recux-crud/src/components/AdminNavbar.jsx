@@ -20,6 +20,12 @@ function AdminNavbar() {
       console.log(error);
       toast.error("Failed to logout")
     }
+
+
+
+
+
+    
   }
 
   return (
