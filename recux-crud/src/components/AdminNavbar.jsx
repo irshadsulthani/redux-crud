@@ -23,11 +23,7 @@ function AdminNavbar() {
   }
 
 
-
-
-
   
-
   return (
     <nav className="bg-gray-900 sticky top-0 z-50 text-white py-4 px-6 shadow-md flex items-center">
       {/* Left - Logo */}
