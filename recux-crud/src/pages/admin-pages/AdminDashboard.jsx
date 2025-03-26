@@ -13,11 +13,6 @@ function AdminDashboard() {
   const [search, setSearch] = useState(""); // State for search query
   const navigate = useNavigate();
 
-
-
-
-  
-
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
