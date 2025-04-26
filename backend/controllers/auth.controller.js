@@ -106,7 +106,7 @@ export const google = async (req, res, next) => {
 
       res.cookie("accessToken", token, { 
         httpOnly: true,
-        maxAge: 3600000 // 1 hour in milliseconds
+        maxAge: 3600000 
       });
       return res.status(201).json({ message: "User created and signed in successfully", user: userData });
     }
